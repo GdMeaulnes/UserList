@@ -12,9 +12,10 @@ final class MainViewModel: ObservableObject {
     @Published var users: [User] = []
     @Published var isLoading: Bool = false
     
-    func fetchUsers() {
+    private let repository = UserListRepository()
+    
+     func fetchUsers() {
         isLoading = true
-        print("dans fetch")
         Task {
             do {
                 let users = try await repository.fetchUsers(quantity: 20)
@@ -25,20 +26,18 @@ final class MainViewModel: ObservableObject {
             }
         }
     }
+        
     
     private func shouldLoadMoreData(currentItem item: User) -> Bool {
         guard let lastItem = users.last else { return false }
         return !isLoading && item.id == lastItem.id
     }
-
     
-    
-    private let repository = UserListRepository()
-    
-     func reloadUsers() {
-        print("dans reload")
+    func reloadUsers() async {
         users.removeAll()
         fetchUsers()
     }
     
 }
+
+

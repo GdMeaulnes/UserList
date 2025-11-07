@@ -10,8 +10,13 @@ import SwiftUI
 
 struct FetchUserView: View {
     
+    private let repository = UserListRepository()
+    
     var body: some View {
+        
         ProgressView()
+        // Recup de la liste
+        // Dismiss
     }
 }
 
@@ -19,3 +24,4 @@ struct FetchUserView: View {
 #Preview {
     FetchUserView()
 }
+
