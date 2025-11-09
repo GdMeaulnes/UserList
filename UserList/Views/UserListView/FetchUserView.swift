@@ -10,13 +10,20 @@ import SwiftUI
 
 struct FetchUserView: View {
     
-    private let repository = UserListRepository()
+    // Récupération du viewModel
+    @EnvironmentObject var viewModel: MainViewModel
     
     var body: some View {
-        
-        ProgressView()
-        // Recup de la liste
-        // Dismiss
+        // Wrap pour pouvoir lancer le reload
+        VStack(spacing: 12) {
+            ProgressView()
+            Text("Loading...")
+        }
+        .task {
+            // Trigger the user fetch when the view appears
+            await viewModel.reloadUsers()
+            print("reload fait")
+        }
     }
 }
 

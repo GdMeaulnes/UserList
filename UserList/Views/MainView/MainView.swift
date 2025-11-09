@@ -13,7 +13,7 @@ struct MainView: View {
     enum SelectedPresentation {
         case GridPresentation
         case ListPresentation
-        case FetchingUsers
+        case ReloadUsers
     }
     
     @StateObject private var viewModel = MainViewModel()
@@ -34,10 +34,12 @@ struct MainView: View {
                 }
                    }
 
-            Tab("Fetch Users", systemImage: "arrow.clockwise", value: .FetchingUsers) {
+            Tab("Reload Users", systemImage: "arrow.clockwise", value: .ReloadUsers) {
                     FetchUserView()
                    }
         }
+        // Partage du viewModel
+        .environmentObject(viewModel)
         .onAppear {
             if viewModel.users.isEmpty {
                 viewModel.fetchUsers()
