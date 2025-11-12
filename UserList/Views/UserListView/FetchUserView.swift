@@ -12,6 +12,7 @@ struct FetchUserView: View {
     
     // Récupération du viewModel
     @EnvironmentObject var viewModel: MainViewModel
+    @Binding var selectedPresentation: MainView.SelectedPresentation
     
     var body: some View {
         // Wrap pour pouvoir lancer le reload
@@ -20,15 +21,28 @@ struct FetchUserView: View {
             Text("Loading...")
         }
         .task {
-            // Trigger the user fetch when the view appears
+            print("Avant \($selectedPresentation)")
             await viewModel.reloadUsers()
-            print("reload fait")
+            // On repositionne le sélecteur à la valeur d'appel
+            selectedPresentation = .ListPresentation
+            print("Apres \($selectedPresentation)")
         }
     }
 }
 
-
-#Preview {
-    FetchUserView()
+// Fabrication d'un viewModel déjà rempli pour la preView
+extension MainViewModel {
+    static var preview: MainViewModel {
+        let vm = MainViewModel()
+        vm.users = [sampleUser1, sampleUser2, sampleUser3, sampleUser4]
+        vm.isLoading = false
+        return vm
+    }
 }
 
+struct FetchUserView_Previews: PreviewProvider {
+    static var previews: some View {
+        FetchUserView(selectedPresentation: .constant(.GridPresentation))
+            .environmentObject(MainViewModel.preview)
+    }
+}

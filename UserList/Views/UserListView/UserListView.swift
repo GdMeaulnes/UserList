@@ -7,7 +7,6 @@ struct UserListView: View {
     
     var body: some View {
         
-//        NavigationStack {
             List(users) { user in
                 NavigationLink(destination: UserDetailView(user: user)) {
                     HStack {
@@ -33,7 +32,6 @@ struct UserListView: View {
                 }
                 .navigationTitle("Users - List Mode")
             }
-//        }
     }
 }
 

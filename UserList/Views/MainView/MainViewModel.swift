@@ -19,14 +19,14 @@ final class MainViewModel: ObservableObject {
         isLoading = true // On indique que le chargement est en cours
         Task { // On crée une tâche asynchrone compatible avec async/await. Comme une View SwiftUI ne peut pas être async, on utilise Task pour lancer du code asynchrone depuis une fonction “classique”.
             do {
-                // Appel du UserListRepository, pour construire l'URLRequest avec l’extension vue précédemment (randomuser.me/api/?results=20) et décode la réponse JSON en [User].
+                // Appel du UserListRepository, pour construire l'URLRequest (randomuser.me/api/?results=20) et décode la réponse JSON en [User].
                 let users = try await repository.fetchUsers(quantity: 20)
                 
                 // On ajoute les nouveaux utilisateurs à la liste existante.
                 self.users.append(contentsOf: users)
                 isLoading = false
             } catch {
-                isLoading = false // Correction du code exitant
+                isLoading = false // Correction du code exitant pour que même sur une sortie en erreur isLoading soit à False
                 print("Error fetching users: \(error.localizedDescription)")
             }
         }

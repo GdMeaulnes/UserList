@@ -19,7 +19,6 @@ struct UserGridView: View {
                 
     var body: some View {
         
-//        NavigationStack {
             ScrollView {
                 LazyVGrid(columns: guides, spacing: 10) {
                     ForEach(users) { user in
@@ -61,7 +60,6 @@ struct UserGridView: View {
                 }
             }
             .navigationTitle("Users - Grid Mode")
-//        }
     }
     
 }

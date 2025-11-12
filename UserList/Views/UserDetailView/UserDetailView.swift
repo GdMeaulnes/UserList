@@ -18,8 +18,6 @@ struct UserDetailView: View {
             }
             
             VStack(alignment: .leading) {
-//                Text("\(user.name.first) \(user.name.last)")
-//                    .font(.headline)
                     Text("\(user.dob.date) - \(user.dob.age) years")
                     .font(.subheadline)
             }
