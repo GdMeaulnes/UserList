@@ -26,13 +26,13 @@ struct MainView: View {
             // Vue en mode liste
             Tab("Users (List)", systemImage: "list.bullet", value: .ListPresentation) {
                 NavigationStack {
-                    UserListView(users: viewModel.users)
+                    UserListView()
                 }
                 }
             // Vue en mode grille
             Tab("Users (Grid)", systemImage: "rectangle.grid.1x2.fill", value: .GridPresentation) {
                 NavigationStack {
-                    UserGridView(users: viewModel.users)
+                    UserGridView()
                 }
                    }
             // Reload d'un nouveau jeu d'identité. L'ancienne liste disparait

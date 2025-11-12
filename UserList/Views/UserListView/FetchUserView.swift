@@ -15,17 +15,15 @@ struct FetchUserView: View {
     @Binding var selectedPresentation: MainView.SelectedPresentation
     
     var body: some View {
-        // Wrap pour pouvoir lancer le reload
+        // Wrap pour pouvoir lancer le reload via une task
         VStack(spacing: 12) {
             ProgressView()
             Text("Loading...")
         }
         .task {
-            print("Avant \($selectedPresentation)")
             await viewModel.reloadUsers()
             // On repositionne le sélecteur à la valeur d'appel
             selectedPresentation = .ListPresentation
-            print("Apres \($selectedPresentation)")
         }
     }
 }

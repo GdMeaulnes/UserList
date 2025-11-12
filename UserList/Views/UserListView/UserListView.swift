@@ -2,12 +2,11 @@ import SwiftUI
 
 struct UserListView: View {
     
-    // One bunch of users
-    let users: [User]
+    @EnvironmentObject var viewModel: MainViewModel
     
     var body: some View {
         
-            List(users) { user in
+        List(viewModel.users) { user in
                 NavigationLink(destination: UserDetailView(user: user)) {
                     HStack {
                         AsyncImage(url: URL(string: user.picture.thumbnail)) { image in
@@ -30,6 +29,12 @@ struct UserListView: View {
                         }
                     }
                 }
+                // Lorsque la dernière vue est affichée, on charge à la suite un paquet de plus
+                .onAppear {
+                    if viewModel.shouldLoadMoreData(currentItem: user) {
+                        viewModel.fetchUsers()
+                    }
+                }
                 .navigationTitle("Users - List Mode")
             }
     }
@@ -37,6 +42,7 @@ struct UserListView: View {
 
 struct UserListView_Previews: PreviewProvider {
     static var previews: some View {
-        UserListView(users: sampleUsers)
+        //UserListView(users: sampleUsers)
+        UserListView()
     }
 }

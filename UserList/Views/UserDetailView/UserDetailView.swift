@@ -4,6 +4,7 @@ struct UserDetailView: View {
     let user: User
     
     var body: some View {
+        // Un simple empilement de la photo, du nom et de l'âge
         VStack {
             AsyncImage(url: URL(string: user.picture.large)) { image in
                 image

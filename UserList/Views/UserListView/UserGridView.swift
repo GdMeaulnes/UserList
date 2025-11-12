@@ -9,8 +9,7 @@ import SwiftUI
 
 struct UserGridView: View {
     
-    // One bunch of users
-    let users: [User]
+    @EnvironmentObject var viewModel: MainViewModel
     
     let guides = [
         GridItem(.adaptive(minimum: 100)),
@@ -21,39 +20,31 @@ struct UserGridView: View {
         
             ScrollView {
                 LazyVGrid(columns: guides, spacing: 10) {
-                    ForEach(users) { user in
+                    ForEach(viewModel.users) { user in
                         NavigationLink(destination: UserDetailView(user: user)) {
                             VStack {
-                                AsyncImage(url: URL(string: user.picture.medium)) { result in
-                                    
-                                    switch result {
-                                    case .empty:
-                                        ProgressView()
-                                            .frame(width: 150, height: 150)
-                                        
-                                    case .success(let image):
-                                        image
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fill)
-                                            .frame(width: 150, height: 150)
-                                            .clipShape(Circle())
-                                        
-                                    case .failure:
-                                        ZStack {
-                                            RoundedRectangle(cornerRadius: 12)
-                                                .fill(.secondary.opacity(0.15))
-                                            Image(systemName: "photo")
-                                                .imageScale(.large)
-                                                .foregroundStyle(.secondary)
-                                        }
-                                        .aspectRatio(1, contentMode: .fit)
-                                    @unknown default:
-                                        EmptyView()
-                                    }
+                                AsyncImage(url: URL(string: user.picture.large)) { image in
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: 150, height: 150)
+                                        .clipShape(Circle())
+                                } placeholder: {
+                                    ProgressView()
+                                        .frame(width: 150, height: 150)
+                                        .clipShape(Circle())
                                 }
+                                
                                 Text("\(user.name.first) \(user.name.last)")
-                                    .font(.subheadline)
-                                    .foregroundStyle(Color(.label))
+                                    .font(.headline)
+                                    .multilineTextAlignment(.center)
+                            }
+
+                        }
+                        // Lorsque la dernière vue est affichée, on charge à la suite un paquet de plus
+                        .onAppear {
+                            if viewModel.shouldLoadMoreData(currentItem: user) {
+                                viewModel.fetchUsers()
                             }
                         }
                     }
@@ -66,7 +57,8 @@ struct UserGridView: View {
 
 struct UserGridView_Previews: PreviewProvider {
     static var previews: some View {
-        UserGridView(users: sampleUsers)
+        //UserGridView(users: sampleUsers)
+        UserGridView()
     }
 }
 

@@ -26,7 +26,7 @@ final class MainViewModel: ObservableObject {
                 self.users.append(contentsOf: users)
                 isLoading = false
             } catch {
-                isLoading = false // Correction du code exitant pour que même sur une sortie en erreur isLoading soit à False
+                isLoading = false // Correction du code existant pour que même sur une sortie en erreur isLoading soit à False
                 print("Error fetching users: \(error.localizedDescription)")
             }
         }
@@ -41,9 +41,7 @@ final class MainViewModel: ObservableObject {
     
     // Fonction "pull to refresh"
     func reloadUsers() async {
-        print("Avant \(users.count)")
         users.removeAll()
-        print("Apres \(users.count)")
         fetchUsers()
     }
     
