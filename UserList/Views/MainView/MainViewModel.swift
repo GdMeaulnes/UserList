@@ -12,7 +12,11 @@ final class MainViewModel: ObservableObject {
     @Published var users: [User] = []
     @Published var isLoading: Bool = false
     
-    private let repository = UserListRepository()
+    private let repository: UserListRepository
+    
+    init(repository: UserListRepository = UserListRepository()) {
+        self.repository = repository
+    }
     
      func fetchUsers() {
          
@@ -46,5 +50,4 @@ final class MainViewModel: ObservableObject {
     }
     
 }
-
 

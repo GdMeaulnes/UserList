@@ -57,8 +57,8 @@ struct UserGridView: View {
 
 struct UserGridView_Previews: PreviewProvider {
     static var previews: some View {
-        //UserGridView(users: sampleUsers)
         UserGridView()
+            .environmentObject(MainViewModel())
     }
 }
 

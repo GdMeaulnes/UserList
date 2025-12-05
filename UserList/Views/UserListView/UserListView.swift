@@ -42,7 +42,7 @@ struct UserListView: View {
 
 struct UserListView_Previews: PreviewProvider {
     static var previews: some View {
-        //UserListView(users: sampleUsers)
         UserListView()
+            .environmentObject(MainViewModel()) 
     }
 }

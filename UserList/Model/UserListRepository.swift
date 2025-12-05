@@ -2,7 +2,7 @@ import Foundation
 
 //Un repository (ou dépôt) est une couche d’accès aux données.
 //Son rôle : récupérer les données (ici, des utilisateurs) depuis une source externe — en l’occurrence, une API HTTP.
-struct UserListRepository {
+class UserListRepository {
 
     // C’est une fonction stockée (une closure). Elle prend en entrée une URLRequest et renvoie un couple (Data, URLResponse) de manière asynchrone et pouvant lever une erreur (async throws).
     //executeDataRequest est une fonction qui exécute une requête réseau et retourne la réponse.
