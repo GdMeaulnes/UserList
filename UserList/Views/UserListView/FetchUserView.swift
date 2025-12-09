@@ -23,18 +23,8 @@ struct FetchUserView: View {
         .task {
             await viewModel.reloadUsers()
             // On repositionne le sélecteur à la valeur d'appel
-            selectedPresentation = .ListPresentation
+            selectedPresentation = .GridPresentation
         }
-    }
-}
-
-// Fabrication d'un viewModel déjà rempli pour la preView
-extension MainViewModel {
-    static var preview: MainViewModel {
-        let vm = MainViewModel()
-        vm.users = [sampleUser1, sampleUser2, sampleUser3, sampleUser4]
-        vm.isLoading = false
-        return vm
     }
 }
 

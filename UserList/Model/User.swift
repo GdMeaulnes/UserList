@@ -1,10 +1,17 @@
 import Foundation
 
-struct User: Identifiable {
+struct User: Identifiable, Equatable {
     var id = UUID()
     let name: Name
     let dob: Dob
     let picture: Picture
+    
+    // Surcharge de l'égalité
+    static func == (lhs: User, rhs: User) -> Bool {
+        lhs.name == rhs.name &&
+        lhs.dob == rhs.dob &&
+        lhs.picture == rhs.picture
+    }
 
     // MARK: - Init
     init(user: UserListResponse.User) {
@@ -14,18 +21,18 @@ struct User: Identifiable {
     }
 
     // MARK: - Dob
-    struct Dob: Codable {
+    struct Dob: Codable, Equatable {
         let date: String
         let age: Int
     }
 
     // MARK: - Name
-    struct Name: Codable {
+    struct Name: Codable, Equatable {
         let title, first, last: String
     }
 
     // MARK: - Picture
-    struct Picture: Codable {
+    struct Picture: Codable, Equatable {
         let large, medium, thumbnail: String
     }
 }
@@ -65,3 +72,13 @@ let sampleUser4: User = .init(
 )
 
 let sampleUsers = [sampleUser1, sampleUser2, sampleUser3, sampleUser4, sampleUser1, sampleUser2, sampleUser3, sampleUser1, sampleUser2, sampleUser3]
+
+// Fabrication d'un viewModel déjà rempli pour les preView
+extension MainViewModel {
+    static var preview: MainViewModel {
+        let vm = MainViewModel()
+        vm.users = [sampleUser1, sampleUser2, sampleUser3, sampleUser4]
+        vm.isLoading = false
+        return vm
+    }
+}

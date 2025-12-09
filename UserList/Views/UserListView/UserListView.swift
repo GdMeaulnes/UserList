@@ -40,9 +40,12 @@ struct UserListView: View {
     }
 }
 
+
 struct UserListView_Previews: PreviewProvider {
     static var previews: some View {
-        UserListView()
-            .environmentObject(MainViewModel()) 
+        NavigationView {
+            UserListView()
+                .environmentObject(MainViewModel.preview)
+        }
     }
 }
