@@ -23,7 +23,7 @@ final class MockUserListRepository: UserListRepository {
     }
 }
 
-@Suite("MainViewModelSwiftTestingTests")
+@Suite(.serialized)
 
 struct MainViewModelSwiftTestingTests {
     
@@ -46,7 +46,7 @@ struct MainViewModelSwiftTestingTests {
     @Test("fetchUsers gère une erreur : users inchangés et isLoading = false")
     func testFetchUsersFailure() async {
         let mock = MockUserListRepository()
-        mock.shouldReturnError = true    // propriété à créer dans ton mock
+        mock.shouldReturnError = true    // crée dans le mock
 
         let vm = MainViewModel(repository: mock)
         vm.users = [sampleUser1]         // liste initiale
@@ -147,6 +147,7 @@ struct MainViewModelSwiftTestingTests {
 
         // --- WHEN ---
         await vm.reloadUsers()
+        try? await Task.sleep(nanoseconds: 200_000_000)
 
         // --- THEN ---
         // Vérifie la 1ère ligne de reloadUsers()
@@ -183,5 +184,5 @@ struct MainViewModelSwiftTestingTests {
             #expect(vm.isLoading == false)
             #expect(vm.users.isEmpty)
         }
-    
 }
+
